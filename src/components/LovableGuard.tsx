@@ -26,6 +26,8 @@ function stripLovableNodes(root: ParentNode = document.body) {
 
 export function LovableGuard() {
   useEffect(() => {
+    if (import.meta.env.PROD) return;
+
     stripLovableNodes(document.documentElement);
 
     const observer = new MutationObserver(() => {
