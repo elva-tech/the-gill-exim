@@ -7,10 +7,10 @@ import pomegranate from "@/assets/pomegranate.jpg";
 export const SITE = {
   name: "THE GILL EXIM",
   tagline: "Exporting India's Finest Agricultural Products Worldwide",
-  phone: "+91 96113 91348",
-  phoneRaw: "9611391348",
-  whatsapp: "919611391348",
-  email: "info@thegillexim.com",
+    phone: "+91 98867 65144",
+    phoneRaw: "9886765144",
+  whatsapp: "919886765144",
+  email: "eximgill0@gmail.com",
   address: {
     line1: "835/3 Kalmeshwar Street",
     line2: "Itagi, Belagavi",
