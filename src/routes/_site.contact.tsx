@@ -22,6 +22,13 @@ export const Route = createFileRoute("/_site/contact")({
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[\d\s+\-()]{7,20}$/;
 
+/**
+ * Web3Forms access key — safe to expose, it only grants permission to post to
+ * the inbox it was issued for. Set VITE_WEB3FORMS_ACCESS_KEY in .env / Vercel.
+ */
+const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
+const ENDPOINT = "https://api.web3forms.com/submit";
+
 type ContactCard = {
   icon: typeof Phone;
   t: string;
@@ -42,7 +49,7 @@ function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting) return;
 
@@ -70,13 +77,41 @@ function ContactPage() {
       return;
     }
 
+    if (!ACCESS_KEY) {
+      setError(
+        `The contact form isn't configured yet. Please email us directly at ${SITE.email} or call ${SITE.phone}.`,
+      );
+      return;
+    }
+
     setError(null);
     setSubmitting(true);
-    window.setTimeout(() => {
-      setSubmitting(false);
+
+    data.append("access_key", ACCESS_KEY);
+    data.append("from_name", `${SITE.name} website`);
+    data.append("subject", `New enquiry from ${name} — ${SITE.name}`);
+    data.append("replyto", email);
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      });
+      const json = (await res.json()) as { success?: boolean; message?: string };
+      if (!res.ok || !json.success) {
+        throw new Error(json.message ?? `Request failed (${res.status})`);
+      }
       setSent(true);
       form.reset();
-    }, 400);
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setError(
+        `Sorry — we couldn't send your message just now. Please email us at ${SITE.email} or message us on WhatsApp.`,
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -127,6 +162,16 @@ function ContactPage() {
               onInput={() => error && setError(null)}
               className="rounded-4xl bg-card border border-border p-8 md:p-10 shadow-soft"
             >
+              {/* Honeypot — Web3Forms silently drops submissions where this is filled. */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
+
               <h2 className="font-display text-2xl md:text-3xl font-extrabold">Send a message</h2>
               <p className="mt-2 text-muted-foreground text-sm">We typically respond within one business day.</p>
 

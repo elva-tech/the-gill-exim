@@ -1,7 +1,7 @@
 import onion from "@/assets/onion.jpg";
 import ginger from "@/assets/ginger.jpg";
 import chilli from "@/assets/chilli.jpg";
-import lemon from "@/assets/lemon.jpg";
+import garlic from "@/assets/garlic.jpg";
 import pomegranate from "@/assets/pomegranate.jpg";
 
 export const SITE = {
@@ -60,10 +60,10 @@ export const PRODUCTS = [
     desc: "Crisp, vivid green chillies with balanced heat — ideal for fresh produce aisles worldwide.",
   },
   {
-    slug: "fresh-lemon",
-    name: "Fresh Lemon",
-    image: lemon,
-    desc: "Juicy, thin-skinned lemons bursting with citrus aroma — graded by size and Brix.",
+    slug: "fresh-garlic",
+    name: "Fresh garlic",
+    image: garlic,
+    desc: "Firm, tight-skinned bulbs with a sharp, pungent aroma — graded by bulb size and clove count.",
   },
   {
     slug: "pomegranate",

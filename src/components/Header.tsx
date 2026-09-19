@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Leaf, Phone } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { NAV } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,9 +32,7 @@ export function Header() {
     >
       <div className="container-x flex h-16 md:h-20 items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <span className={`grid place-items-center h-10 w-10 rounded-xl transition-colors ${solid ? "bg-primary text-primary-foreground" : "bg-white/15 text-white backdrop-blur-md"}`}>
-            <Leaf className="h-5 w-5" />
-          </span>
+          <Logo className="h-10 w-10 md:h-11 md:w-11 rounded-xl ring-1 ring-black/5" />
           <span className="flex flex-col leading-none">
             <span className={`font-display font-extrabold tracking-tight text-base md:text-lg ${solid ? "text-foreground" : "text-white"}`}>
               THE GILL EXIM

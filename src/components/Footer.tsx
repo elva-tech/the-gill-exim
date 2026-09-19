@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Leaf, Phone, MapPin, Mail } from "lucide-react";
+import { Phone, MapPin, Mail } from "lucide-react";
 import { NAV, PRODUCTS, SITE } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 
 export function Footer() {
   return (
@@ -9,9 +10,7 @@ export function Footer() {
       <div className="container-x relative grid gap-12 md:grid-cols-2 lg:grid-cols-4 py-16 md:py-20">
         <div>
           <div className="flex items-center gap-2.5 mb-5">
-            <span className="grid place-items-center h-10 w-10 rounded-xl bg-accent text-accent-foreground">
-              <Leaf className="h-5 w-5" />
-            </span>
+            <Logo className="h-10 w-10 rounded-xl ring-1 ring-white/15" />
             <span className="font-display font-extrabold text-lg">THE GILL EXIM</span>
           </div>
           <p className="text-white/70 text-sm leading-relaxed">

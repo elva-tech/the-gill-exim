@@ -33,7 +33,7 @@ function AboutPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 text-muted-foreground text-base md:text-lg leading-relaxed">
-                THE GILL EXIM is committed to delivering premium quality agricultural products across global markets. Based in India, we specialize in exporting fresh onions, ginger, green chillies, lemons, and pomegranates while maintaining international quality standards.
+                THE GILL EXIM is committed to delivering premium quality agricultural products across global markets. Based in India, we specialize in exporting fresh onions, ginger, green chillies, garlics, and pomegranates while maintaining international quality standards.
               </p>
               <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
                 We source directly from trusted farms and suppliers to ensure freshness, hygiene, and consistency in every shipment.

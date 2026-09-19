@@ -67,7 +67,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "THE GILL EXIM — Premium Indian Agricultural Exports Worldwide" },
-      { name: "description", content: "THE GILL EXIM exports premium fresh onion, ginger, green chilli, lemon, and pomegranate from India to international markets with reliability and quality." },
+      { name: "description", content: "THE GILL EXIM exports premium fresh onion, ginger, green chilli, garlic, and pomegranate from India to international markets with reliability and quality." },
       { name: "author", content: "THE GILL EXIM" },
       { name: "theme-color", content: "#1F6F43" },
       { property: "og:title", content: "THE GILL EXIM — Premium Indian Agricultural Exports" },
@@ -89,7 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "THE GILL EXIM",
-          description: "Premium Indian agricultural products exporter — fresh onion, ginger, green chilli, lemon, pomegranate.",
+          description: "Premium Indian agricultural products exporter — fresh onion, ginger, green chilli, garlic, pomegranate.",
           telephone: "+91-9611391348",
           address: {
             "@type": "PostalAddress",

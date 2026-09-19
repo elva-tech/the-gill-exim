@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_site/products")({
   head: () => ({
     meta: [
       { title: "Products — Fresh Indian Agro Exports | THE GILL EXIM" },
-      { name: "description", content: "Browse our export catalogue: fresh onion, ginger, green chilli, lemon and pomegranate — hand-graded and shipped globally." },
+      { name: "description", content: "Browse our export catalogue: fresh onion, ginger, green chilli, garlic and pomegranate — hand-graded and shipped globally." },
       { property: "og:title", content: "Products — THE GILL EXIM" },
       { property: "og:description", content: "Fresh Indian agricultural produce for international buyers." },
       { property: "og:url", content: "/products" },
