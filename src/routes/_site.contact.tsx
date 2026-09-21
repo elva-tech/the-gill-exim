@@ -26,8 +26,10 @@ const PHONE_RE = /^[\d\s+\-()]{7,20}$/;
  * Web3Forms access key — safe to expose, it only grants permission to post to
  * the inbox it was issued for. Set VITE_WEB3FORMS_ACCESS_KEY in .env / Vercel.
  */
-const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
-const ENDPOINT = "https://api.web3forms.com/submit";
+// const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
+// const ENDPOINT = "https://api.web3forms.com/submit";
+
+const ENDPOINT = "https://formsubmit.co/ajax/eximgill0@gmail.com";
 
 type ContactCard = {
   icon: typeof Phone;
@@ -49,63 +51,136 @@ function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (submitting) return;
+
+  //   const form = e.currentTarget;
+  //   const data = new FormData(form);
+  //   const name = String(data.get("name") ?? "").trim();
+  //   const email = String(data.get("email") ?? "").trim();
+  //   const phone = String(data.get("phone") ?? "").trim();
+  //   const message = String(data.get("message") ?? "").trim();
+
+  //   if (!name || name.length < 2) {
+  //     setError("Please enter your full name (at least 2 characters).");
+  //     return;
+  //   }
+  //   if (!EMAIL_RE.test(email)) {
+  //     setError("Please enter a valid email address.");
+  //     return;
+  //   }
+  //   if (phone && !PHONE_RE.test(phone)) {
+  //     setError("Please enter a valid phone number, or leave it blank.");
+  //     return;
+  //   }
+  //   if (!message || message.length < 10) {
+  //     setError("Please enter a message of at least 10 characters.");
+  //     return;
+  //   }
+
+  //   if (!ACCESS_KEY) {
+  //     setError(
+  //       `The contact form isn't configured yet. Please email us directly at ${SITE.email} or call ${SITE.phone}.`,
+  //     );
+  //     return;
+  //   }
+
+  //   setError(null);
+  //   setSubmitting(true);
+
+  //   data.append("access_key", ACCESS_KEY);
+  //   data.append("from_name", `${SITE.name} website`);
+  //   data.append("subject", `New enquiry from ${name} — ${SITE.name}`);
+  //   data.append("replyto", email);
+
+  //   try {
+  //     const res = await fetch(ENDPOINT, {
+  //       method: "POST",
+  //       headers: { Accept: "application/json" },
+  //       body: data,
+  //     });
+  //     const json = (await res.json()) as { success?: boolean; message?: string };
+  //     if (!res.ok || !json.success) {
+  //       throw new Error(json.message ?? `Request failed (${res.status})`);
+  //     }
+  //     setSent(true);
+  //     form.reset();
+  //   } catch (err) {
+  //     console.error("Contact form submission failed:", err);
+  //     setError(
+  //       `Sorry — we couldn't send your message just now. Please email us at ${SITE.email} or message us on WhatsApp.`,
+  //     );
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
     if (submitting) return;
-
+  
     const form = e.currentTarget;
     const data = new FormData(form);
+  
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
-
+  
     if (!name || name.length < 2) {
       setError("Please enter your full name (at least 2 characters).");
       return;
     }
+  
     if (!EMAIL_RE.test(email)) {
       setError("Please enter a valid email address.");
       return;
     }
+  
     if (phone && !PHONE_RE.test(phone)) {
       setError("Please enter a valid phone number, or leave it blank.");
       return;
     }
+  
     if (!message || message.length < 10) {
       setError("Please enter a message of at least 10 characters.");
       return;
     }
-
-    if (!ACCESS_KEY) {
-      setError(
-        `The contact form isn't configured yet. Please email us directly at ${SITE.email} or call ${SITE.phone}.`,
-      );
-      return;
-    }
-
+  
     setError(null);
     setSubmitting(true);
-
-    data.append("access_key", ACCESS_KEY);
-    data.append("from_name", `${SITE.name} website`);
-    data.append("subject", `New enquiry from ${name} — ${SITE.name}`);
-    data.append("replyto", email);
-
+  
+    data.append("_subject", `New enquiry from ${name} — ${SITE.name}`);
+    data.append("_replyto", email);
+    data.append("_template", "table");
+    data.append("_captcha", "true");
+  
     try {
       const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+        },
         body: data,
       });
-      const json = (await res.json()) as { success?: boolean; message?: string };
+  
+      const json = (await res.json()) as {
+        success?: boolean;
+        message?: string;
+      };
+  
       if (!res.ok || !json.success) {
         throw new Error(json.message ?? `Request failed (${res.status})`);
       }
+  
       setSent(true);
       form.reset();
     } catch (err) {
       console.error("Contact form submission failed:", err);
+  
       setError(
         `Sorry — we couldn't send your message just now. Please email us at ${SITE.email} or message us on WhatsApp.`,
       );
@@ -113,6 +188,7 @@ function ContactPage() {
       setSubmitting(false);
     }
   };
+
 
   const resetForm = () => {
     setSent(false);
